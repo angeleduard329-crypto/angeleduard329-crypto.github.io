@@ -3,220 +3,156 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ANGELEDUARD329</title>
+<title>Sistema Seguro</title>
 
 <style>
-body{
-margin:0;
-font-family:Consolas, monospace;
-background:black;
-color:#00ffe1;
-overflow-x:hidden;
-scroll-behavior:smooth;
+body {
+    margin: 0;
+    background: black;
+    font-family: 'Courier New', monospace;
+    color: #00ffe1;
+    overflow-x: hidden;
 }
 
-canvas{
-position:fixed;
-top:0;
-left:0;
-z-index:-1;
+/* Fondo animado */
+body::before {
+    content: "";
+    position: fixed;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 20% 30%, #00ffe1 0%, transparent 25%),
+                radial-gradient(circle at 80% 70%, #00ffe1 0%, transparent 25%),
+                radial-gradient(circle at 50% 50%, #00ffff33 0%, transparent 40%);
+    animation: moveBg 15s infinite linear;
+    z-index: -1;
 }
 
-section{
-padding:100px 20px;
-text-align:center;
+@keyframes moveBg {
+    0% { transform: translate(0,0); }
+    50% { transform: translate(-10%, -10%); }
+    100% { transform: translate(0,0); }
 }
 
-h1{
-font-size:50px;
-text-shadow:0 0 20px #00ffe1;
+/* Login */
+#login {
+    text-align: center;
+    margin-top: 15%;
 }
 
-.card{
-background:rgba(0,0,0,0.6);
-border:1px solid #00ffe1;
-padding:20px;
-margin:20px;
-display:inline-block;
-width:250px;
-transition:0.3s;
+h1 {
+    font-size: 50px;
+    text-shadow: 0 0 20px #00ffe1;
 }
 
-.card:hover{
-transform:scale(1.05);
-box-shadow:0 0 20px #00ffe1;
+input {
+    padding: 10px;
+    width: 250px;
+    background: black;
+    border: 1px solid #00ffe1;
+    color: #00ffe1;
+    font-size: 16px;
+    text-align: center;
 }
 
-input, textarea{
-background:black;
-border:1px solid #00ffe1;
-color:#00ffe1;
-padding:10px;
-width:250px;
+button {
+    margin-top: 10px;
+    padding: 10px 25px;
+    background: #00ffe1;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
 }
 
-button{
-background:#00ffe1;
-border:none;
-padding:10px 20px;
-cursor:pointer;
+button:hover {
+    background: #00c2aa;
 }
 
-#loginScreen{
-position:fixed;
-width:100%;
-height:100%;
-background:black;
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-z-index:9999;
+/* Contenido */
+#mainContent {
+    display: none;
+    padding: 50px;
 }
 
-#terminal{
-background:black;
-border:1px solid #00ffe1;
-padding:20px;
-width:80%;
-max-width:600px;
-margin:auto;
-text-align:left;
+section {
+    margin-bottom: 100px;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: 1s;
+}
+
+section.show {
+    opacity: 1;
+    transform: translateY(0);
 }
 </style>
 </head>
+
 <body>
 
-<!-- 🔐 LOGIN -->
-<div id="loginScreen">
-<h1>SISTEMA SEGURO</h1>
-<input type="password" id="password" placeholder="Ingresa clave">
-<button onclick="checkPassword()">ACCEDER</button>
-<p id="loginMessage"></p>
-</div>
-
-<!-- 🎵 AQUI VA LA MUSICA -->
+<!-- AUDIO -->
 <audio id="bgMusic" loop>
     <source src="epic.mp3" type="audio/mpeg">
 </audio>
 
-<!-- 🌌 FONDO -->
-<canvas id="bg"></canvas>
-
-<!-- 🧑‍💻 HERO -->
-<section>
-<h1>ANGELEDUARD329</h1>
-<p>Desarrollador en proceso | Futuro Hacker Ético</p>
-</section>
-
-<!-- 📂 PROYECTOS -->
-<section>
-<h1>PROYECTOS</h1>
-<div class="card">Página Cyberpunk</div>
-<div class="card">Terminal Web</div>
-<div class="card">Portafolio Interactivo</div>
-</section>
-
-<!-- 🧠 SOBRE MI -->
-<section>
-<h1>SOBRE MÍ</h1>
-<p>Aprendiendo programación y ciberseguridad.</p>
-</section>
-
-<!-- 📬 CONTACTO -->
-<section>
-<h1>CONTACTO</h1>
-<input type="text" placeholder="Tu nombre"><br><br>
-<textarea placeholder="Tu mensaje"></textarea><br><br>
-<button>Enviar</button>
-</section>
-
-<!-- 🖥️ TERMINAL -->
-<section>
-<h1>TERMINAL</h1>
-<div id="terminal">
-<p>> escribe: help</p>
-<input type="text" id="commandInput" style="width:100%;">
-<div id="output"></div>
+<!-- LOGIN -->
+<div id="login">
+    <h1>SISTEMA SEGURO</h1>
+    <input type="password" id="password" placeholder="Ingresa clave">
+    <br>
+    <button onclick="checkPassword()">ACCEDER</button>
 </div>
-</section>
+
+<!-- CONTENIDO -->
+<div id="mainContent">
+
+    <section>
+        <h2>🧑‍💻 Bienvenido Arquitecto Digital</h2>
+        <p>Este sistema ha sido activado correctamente.</p>
+    </section>
+
+    <section>
+        <h2>📂 Proyectos</h2>
+        <p>Proyecto Alpha - En desarrollo</p>
+        <p>Proyecto Cyber - Próximamente</p>
+    </section>
+
+    <section>
+        <h2>🧠 Sobre mí</h2>
+        <p>Explorador digital, constructor de mundos virtuales.</p>
+    </section>
+
+    <section>
+        <h2>📬 Contacto</h2>
+        <p>Email: contacto@futuro.dev</p>
+    </section>
+
+</div>
 
 <script>
+function checkPassword() {
+    const password = document.getElementById("password").value;
 
-/* 🔐 LOGIN */
-function checkPassword(){
-const pass = document.getElementById("password").value;
-const msg = document.getElementById("loginMessage");
-const music = document.getElementById("bgMusic");
-
-if(pass === "angel123"){
-msg.innerHTML = "🔓 ACCESO CONCEDIDO";
-msg.style.color="lime";
-music.play();
-setTimeout(()=>{
-document.getElementById("loginScreen").style.display="none";
-},1000);
-}else{
-msg.innerHTML = "❌ ACCESO DENEGADO";
-msg.style.color="red";
-}
+    if(password === "neo2026") {
+        document.getElementById("login").style.display = "none";
+        document.getElementById("mainContent").style.display = "block";
+        document.getElementById("bgMusic").play();
+        revealSections();
+    } else {
+        alert("ACCESO DENEGADO");
+    }
 }
 
-/* 🌌 FONDO */
-const canvas=document.getElementById("bg");
-const ctx=canvas.getContext("2d");
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
-
-let particles=[];
-for(let i=0;i<100;i++){
-particles.push({
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
-size:Math.random()*2,
-speed:Math.random()*0.5
-});
+function revealSections() {
+    const sections = document.querySelectorAll("section");
+    window.addEventListener("scroll", () => {
+        sections.forEach(sec => {
+            const position = sec.getBoundingClientRect().top;
+            if(position < window.innerHeight - 100) {
+                sec.classList.add("show");
+            }
+        });
+    });
 }
-
-function animate(){
-ctx.fillStyle="rgba(0,0,0,0.2)";
-ctx.fillRect(0,0,canvas.width,canvas.height);
-ctx.fillStyle="#00ffe1";
-
-particles.forEach(p=>{
-ctx.beginPath();
-ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
-ctx.fill();
-p.y+=p.speed;
-if(p.y>canvas.height)p.y=0;
-});
-
-requestAnimationFrame(animate);
-}
-animate();
-
-/* 🖥️ TERMINAL */
-const input=document.getElementById("commandInput");
-const output=document.getElementById("output");
-
-input.addEventListener("keypress",function(e){
-if(e.key==="Enter"){
-const cmd=input.value;
-if(cmd==="help"){
-output.innerHTML+="<p>> comandos: about, projects</p>";
-}
-else if(cmd==="about"){
-output.innerHTML+="<p>Soy ANGELEDUARD329.</p>";
-}
-else if(cmd==="projects"){
-output.innerHTML+="<p>Proyecto actual: Web Cyberpunk.</p>";
-}
-else{
-output.innerHTML+="<p>Comando no reconocido.</p>";
-}
-input.value="";
-}
-});
 </script>
 
 </body>
