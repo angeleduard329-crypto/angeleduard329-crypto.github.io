@@ -1,36 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Angel 329 | Cyberpunk System</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ANGELEDUARD329</title>
 
 <style>
-body{<audio id="bgMusic" loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-</audio>
-
-<div id="startScreen" style="
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:black;
-color:#00ffcc;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:30px;
-z-index:9999;
-cursor:pointer;">
-    ▶ CLICK PARA INICIAR SISTEMA
-</div>
-
+body{
 margin:0;
+font-family:Consolas, monospace;
 background:black;
-color:#00ffff;
-font-family:Consolas,monospace;
+color:#00ffe1;
 overflow-x:hidden;
+scroll-behavior:smooth;
 }
 
 canvas{
@@ -41,190 +23,201 @@ z-index:-1;
 }
 
 section{
-min-height:100vh;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-opacity:0;
-transform:translateY(40px);
-transition:1s;
-}
-
-section.visible{
-opacity:1;
-transform:translateY(0);
+padding:100px 20px;
+text-align:center;
 }
 
 h1{
 font-size:50px;
-text-shadow:0 0 20px #00ffff;
+text-shadow:0 0 20px #00ffe1;
 }
 
-.terminal{
-background:rgba(0,0,0,0.8);
+.card{
+background:rgba(0,0,0,0.6);
+border:1px solid #00ffe1;
 padding:20px;
-width:80%;
-max-width:600px;
-border:1px solid #00ffff;
+margin:20px;
+display:inline-block;
+width:250px;
+transition:0.3s;
 }
 
-input{
+.card:hover{
+transform:scale(1.05);
+box-shadow:0 0 20px #00ffe1;
+}
+
+input, textarea{
 background:black;
-border:none;
-color:#00ff00;
-outline:none;
-font-family:Consolas;
-width:100%;
+border:1px solid #00ffe1;
+color:#00ffe1;
+padding:10px;
+width:250px;
 }
 
 button{
-background:#00ffff;
+background:#00ffe1;
 border:none;
 padding:10px 20px;
 cursor:pointer;
-margin-top:15px;
+}
+
+#loginScreen{
+position:fixed;
+width:100%;
+height:100%;
+background:black;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+z-index:9999;
+}
+
+#terminal{
+background:black;
+border:1px solid #00ffe1;
+padding:20px;
+width:80%;
+max-width:600px;
+margin:auto;
+text-align:left;
 }
 </style>
 </head>
-
 <body>
 
-<canvas id="matrix"></canvas>
+<!-- 🔐 LOGIN -->
+<div id="loginScreen">
+<h1>SISTEMA SEGURO</h1>
+<input type="password" id="password" placeholder="Ingresa clave">
+<button onclick="checkPassword()">ACCEDER</button>
+<p id="loginMessage"></p>
+</div>
 
-<!-- ACCESO -->
-<section id="login">
-<h1>🔐 ACCESO AL SISTEMA</h1>
-<button onclick="access()">Entrar</button>
-<p id="status"></p>
-</section>
+<!-- 🎵 AQUI VA LA MUSICA -->
+<audio id="bgMusic" loop>
+    <source src="epic.mp3" type="audio/mpeg">
+</audio>
 
-<!-- MAIN -->
-<section id="main">
-<h1>ANGEL 329</h1>
-<p>Cyberpunk Developer</p>
-</section>
+<!-- 🌌 FONDO -->
+<canvas id="bg"></canvas>
 
-<!-- TERMINAL -->
+<!-- 🧑‍💻 HERO -->
 <section>
-<h1>🖥 Terminal</h1>
-<div class="terminal">
-<div id="output">Escribe: help</div>
-<input id="command" onkeydown="run(event)">
+<h1>ANGELEDUARD329</h1>
+<p>Desarrollador en proceso | Futuro Hacker Ético</p>
+</section>
+
+<!-- 📂 PROYECTOS -->
+<section>
+<h1>PROYECTOS</h1>
+<div class="card">Página Cyberpunk</div>
+<div class="card">Terminal Web</div>
+<div class="card">Portafolio Interactivo</div>
+</section>
+
+<!-- 🧠 SOBRE MI -->
+<section>
+<h1>SOBRE MÍ</h1>
+<p>Aprendiendo programación y ciberseguridad.</p>
+</section>
+
+<!-- 📬 CONTACTO -->
+<section>
+<h1>CONTACTO</h1>
+<input type="text" placeholder="Tu nombre"><br><br>
+<textarea placeholder="Tu mensaje"></textarea><br><br>
+<button>Enviar</button>
+</section>
+
+<!-- 🖥️ TERMINAL -->
+<section>
+<h1>TERMINAL</h1>
+<div id="terminal">
+<p>> escribe: help</p>
+<input type="text" id="commandInput" style="width:100%;">
+<div id="output"></div>
 </div>
 </section>
 
-<audio autoplay loop>
-<source src="https://cdn.pixabay.com/download/audio/2022/10/25/audio_6e9d0b8a63.mp3?filename=future-ambient-124008.mp3">
-</audio>
-
 <script>
-// MATRIX + GALAXIA
-const canvas=document.getElementById("matrix");
+
+/* 🔐 LOGIN */
+function checkPassword(){
+const pass = document.getElementById("password").value;
+const msg = document.getElementById("loginMessage");
+const music = document.getElementById("bgMusic");
+
+if(pass === "angel123"){
+msg.innerHTML = "🔓 ACCESO CONCEDIDO";
+msg.style.color="lime";
+music.play();
+setTimeout(()=>{
+document.getElementById("loginScreen").style.display="none";
+},1000);
+}else{
+msg.innerHTML = "❌ ACCESO DENEGADO";
+msg.style.color="red";
+}
+}
+
+/* 🌌 FONDO */
+const canvas=document.getElementById("bg");
 const ctx=canvas.getContext("2d");
-canvas.height=window.innerHeight;
 canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
 
-const letters="01ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-const fontSize=14;
-const columns=canvas.width/fontSize;
-const drops=[];
-for(let x=0;x<columns;x++) drops[x]=1;
-
-let stars=[];
+let particles=[];
 for(let i=0;i<100;i++){
-stars.push({
+particles.push({
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
-radius:Math.random()*2
+size:Math.random()*2,
+speed:Math.random()*0.5
 });
 }
 
-function draw(){
-ctx.fillStyle="rgba(0,0,0,0.08)";
+function animate(){
+ctx.fillStyle="rgba(0,0,0,0.2)";
 ctx.fillRect(0,0,canvas.width,canvas.height);
+ctx.fillStyle="#00ffe1";
 
-ctx.fillStyle="#00ff00";
-ctx.font=fontSize+"px monospace";
-
-for(let i=0;i<drops.length;i++){
-const text=letters.charAt(Math.floor(Math.random()*letters.length));
-ctx.fillText(text,i*fontSize,drops[i]*fontSize);
-if(drops[i]*fontSize>canvas.height&&Math.random()>0.975)
-drops[i]=0;
-drops[i]++;
-}
-
-ctx.fillStyle="white";
-stars.forEach(s=>{
+particles.forEach(p=>{
 ctx.beginPath();
-ctx.arc(s.x,s.y,s.radius,0,Math.PI*2);
+ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
 ctx.fill();
+p.y+=p.speed;
+if(p.y>canvas.height)p.y=0;
 });
-}
-setInterval(draw,33);
 
-// ACCESO
-function access(){
-let success=Math.random()>0.3;
-let status=document.getElementById("status");
-if(success){
-status.innerHTML="✅ ACCESO CONCEDIDO";
-status.style.color="#00ff00";
-document.getElementById("login").style.display="none";
-}else{
-status.innerHTML="❌ ACCESO DENEGADO";
-status.style.color="red";
+requestAnimationFrame(animate);
 }
-}
+animate();
 
-// TERMINAL
-function run(e){
+/* 🖥️ TERMINAL */
+const input=document.getElementById("commandInput");
+const output=document.getElementById("output");
+
+input.addEventListener("keypress",function(e){
 if(e.key==="Enter"){
-let cmd=e.target.value;
-let output=document.getElementById("output");
+const cmd=input.value;
 if(cmd==="help"){
-output.innerHTML="Comandos: about, skills, clear";
+output.innerHTML+="<p>> comandos: about, projects</p>";
 }
 else if(cmd==="about"){
-output.innerHTML="Soy Angel 329, futuro experto en ciberseguridad.";
+output.innerHTML+="<p>Soy ANGELEDUARD329.</p>";
 }
-else if(cmd==="skills"){
-output.innerHTML="HTML, CSS, JavaScript en progreso.";
-}
-else if(cmd==="clear"){
-output.innerHTML="";
+else if(cmd==="projects"){
+output.innerHTML+="<p>Proyecto actual: Web Cyberpunk.</p>";
 }
 else{
-output.innerHTML="Comando no reconocido.";
+output.innerHTML+="<p>Comando no reconocido.</p>";
 }
-e.target.value="";
+input.value="";
 }
-}
-
-// SCROLL ANIMATION
-const sections=document.querySelectorAll("section");
-window.addEventListener("scroll",()=>{
-sections.forEach(sec=>{
-const top=sec.getBoundingClientRect().top;
-if(top<window.innerHeight-100){
-sec.classList.add("visible");
-}
-});
-});
-</script><script>
-const music = document.getElementById("bgMusic");
-const startScreen = document.getElementById("startScreen");
-
-startScreen.addEventListener("click", () => {
-    music.play();
-    startScreen.style.display = "none";
 });
 </script>
 
-
 </body>
 </html>
-
-
-
