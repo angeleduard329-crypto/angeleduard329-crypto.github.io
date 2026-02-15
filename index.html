@@ -212,7 +212,16 @@ sec.classList.add("visible");
 }
 });
 });
+</script><script>
+const music = document.getElementById("bgMusic");
+const startScreen = document.getElementById("startScreen");
+
+startScreen.addEventListener("click", () => {
+    music.play();
+    startScreen.style.display = "none";
+});
 </script>
+
 
 </body>
 </html>
