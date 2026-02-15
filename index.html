@@ -1,72 +1,95 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Angel Eduardo | Cyberpunk Dev</title>
+    <title>Angel 329 | Cyberpunk</title>
     <style>
         body {
             margin: 0;
-            height: 100vh;
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Courier New', monospace;
-            color: white;
-            text-align: center;
             overflow: hidden;
+            background: black;
+            font-family: Consolas, monospace;
+            color: #00ffcc;
         }
 
-        .container {
-            animation: fadeIn 2s ease-in-out;
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            margin-top: 20vh;
         }
 
         h1 {
             font-size: 50px;
-            background: linear-gradient(90deg, #ff00cc, #00ffff);
-            -webkit-background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 20px #ff00cc;
+            color: #00ffff;
+            text-shadow: 0 0 20px #00ffff;
         }
 
         p {
             font-size: 20px;
-            color: #00ffff;
-            text-shadow: 0 0 10px #00ffff;
-        }
-
-        button {
-            margin-top: 20px;
-            padding: 10px 25px;
-            font-size: 16px;
-            background: transparent;
-            border: 2px solid #ff00cc;
             color: #ff00cc;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        button:hover {
-            background: #ff00cc;
-            color: black;
-            box-shadow: 0 0 20px #ff00cc;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            text-shadow: 0 0 10px #ff00cc;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
+<canvas id="matrix"></canvas>
+
+<div class="content">
     <h1>ANGEL 329</h1>
     <p>Cyberpunk Developer | Futuro Hacker Ético</p>
-    <button onclick="alert('Bienvenido al futuro 😎🔥')">
-        Entrar al sistema
-    </button>
 </div>
+
+<script>
+    const canvas = document.getElementById("matrix");
+    const ctx = canvas.getContext("2d");
+
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+
+    const letters = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const fontSize = 16;
+    const columns = canvas.width / fontSize;
+
+    const drops = [];
+
+    for (let x = 0; x < columns; x++)
+        drops[x] = 1;
+
+    function draw() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = "#00ff00";
+        ctx.font = fontSize + "px monospace";
+
+        for (let i = 0; i < drops.length; i++) {
+            const text = letters.charAt(Math.floor(Math.random() * letters.length));
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975)
+                drops[i] = 0;
+
+            drops[i]++;
+        }
+    }
+
+    setInterval(draw, 33);
+
+    window.addEventListener("resize", () => {
+        canvas.height = window.innerHeight;
+        canvas.width = window.innerWidth;
+    });
+</script>
 
 </body>
 </html>
+
+
 
