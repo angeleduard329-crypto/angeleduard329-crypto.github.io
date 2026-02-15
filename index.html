@@ -1,49 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Angel Eduardo | Hacker Ético</title>
+    <title>Angel Eduardo | Cyberpunk Dev</title>
     <style>
         body {
-            background-color: black;
-            color: #00ff00;
-            font-family: Consolas, monospace;
+            margin: 0;
+            height: 100vh;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Courier New', monospace;
+            color: white;
             text-align: center;
-            margin-top: 150px;
-        }
-
-        #texto {
-            font-size: 40px;
-            border-right: 3px solid #00ff00;
-            display: inline-block;
-            white-space: nowrap;
             overflow: hidden;
         }
 
-        p {
-            font-size: 20px;
+        .container {
+            animation: fadeIn 2s ease-in-out;
         }
-    </style>
-</head>
-<body>
 
-    <div id="texto"></div>
-    <p>Futuro experto en ciberseguridad</p>
+        h1 {
+            font-size: 50px;
+            background: l
 
-<script>
-    const mensaje = "Angel Hacker Ético 😎";
-    let i = 0;
-
-    function escribir() {
-        if (i < mensaje.length) {
-            document.getElementById("texto").innerHTML += mensaje.charAt(i);
-            i++;
-            setTimeout(escribir, 100);
-        }
-    }
-
-    escribir();
-</script>
-
-</body>
-</html>
 
