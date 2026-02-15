@@ -22,6 +22,51 @@
 
         h1 {
             font-size: 50px;
-            background: l
+            background: linear-gradient(90deg, #ff00cc, #00ffff);
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px #ff00cc;
+        }
 
+        p {
+            font-size: 20px;
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 25px;
+            font-size: 16px;
+            background: transparent;
+            border: 2px solid #ff00cc;
+            color: #ff00cc;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #ff00cc;
+            color: black;
+            box-shadow: 0 0 20px #ff00cc;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>ANGEL 329</h1>
+    <p>Cyberpunk Developer | Futuro Hacker Ético</p>
+    <button onclick="alert('Bienvenido al futuro 😎🔥')">
+        Entrar al sistema
+    </button>
+</div>
+
+</body>
+</html>
 
