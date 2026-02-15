@@ -1,91 +1,197 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Angel 329 | Cyberpunk</title>
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            background: black;
-            font-family: Consolas, monospace;
-            color: #00ffcc;
-        }
+<meta charset="UTF-8">
+<title>Angel 329 | Cyberpunk System</title>
 
-        canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
+<style>
+body{
+margin:0;
+background:black;
+color:#00ffff;
+font-family:Consolas,monospace;
+overflow-x:hidden;
+}
 
-        .content {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            margin-top: 20vh;
-        }
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
+}
 
-        h1 {
-            font-size: 50px;
-            color: #00ffff;
-            text-shadow: 0 0 20px #00ffff;
-        }
+section{
+min-height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+opacity:0;
+transform:translateY(40px);
+transition:1s;
+}
 
-        p {
-            font-size: 20px;
-            color: #ff00cc;
-            text-shadow: 0 0 10px #ff00cc;
-        }
-    </style>
+section.visible{
+opacity:1;
+transform:translateY(0);
+}
+
+h1{
+font-size:50px;
+text-shadow:0 0 20px #00ffff;
+}
+
+.terminal{
+background:rgba(0,0,0,0.8);
+padding:20px;
+width:80%;
+max-width:600px;
+border:1px solid #00ffff;
+}
+
+input{
+background:black;
+border:none;
+color:#00ff00;
+outline:none;
+font-family:Consolas;
+width:100%;
+}
+
+button{
+background:#00ffff;
+border:none;
+padding:10px 20px;
+cursor:pointer;
+margin-top:15px;
+}
+</style>
 </head>
+
 <body>
 
 <canvas id="matrix"></canvas>
 
-<div class="content">
-    <h1>ANGEL 329</h1>
-    <p>Cyberpunk Developer | Futuro Hacker Ético</p>
+<!-- ACCESO -->
+<section id="login">
+<h1>🔐 ACCESO AL SISTEMA</h1>
+<button onclick="access()">Entrar</button>
+<p id="status"></p>
+</section>
+
+<!-- MAIN -->
+<section id="main">
+<h1>ANGEL 329</h1>
+<p>Cyberpunk Developer</p>
+</section>
+
+<!-- TERMINAL -->
+<section>
+<h1>🖥 Terminal</h1>
+<div class="terminal">
+<div id="output">Escribe: help</div>
+<input id="command" onkeydown="run(event)">
 </div>
+</section>
+
+<audio autoplay loop>
+<source src="https://cdn.pixabay.com/download/audio/2022/10/25/audio_6e9d0b8a63.mp3?filename=future-ambient-124008.mp3">
+</audio>
 
 <script>
-    const canvas = document.getElementById("matrix");
-    const ctx = canvas.getContext("2d");
+// MATRIX + GALAXIA
+const canvas=document.getElementById("matrix");
+const ctx=canvas.getContext("2d");
+canvas.height=window.innerHeight;
+canvas.width=window.innerWidth;
 
-    canvas.height = window.innerHeight;
-    canvas.width = window.innerWidth;
+const letters="01ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const fontSize=14;
+const columns=canvas.width/fontSize;
+const drops=[];
+for(let x=0;x<columns;x++) drops[x]=1;
 
-    const letters = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    const fontSize = 16;
-    const columns = canvas.width / fontSize;
+let stars=[];
+for(let i=0;i<100;i++){
+stars.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+radius:Math.random()*2
+});
+}
 
-    const drops = [];
+function draw(){
+ctx.fillStyle="rgba(0,0,0,0.08)";
+ctx.fillRect(0,0,canvas.width,canvas.height);
 
-    for (let x = 0; x < columns; x++)
-        drops[x] = 1;
+ctx.fillStyle="#00ff00";
+ctx.font=fontSize+"px monospace";
 
-    function draw() {
-        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+for(let i=0;i<drops.length;i++){
+const text=letters.charAt(Math.floor(Math.random()*letters.length));
+ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+if(drops[i]*fontSize>canvas.height&&Math.random()>0.975)
+drops[i]=0;
+drops[i]++;
+}
 
-        ctx.fillStyle = "#00ff00";
-        ctx.font = fontSize + "px monospace";
+ctx.fillStyle="white";
+stars.forEach(s=>{
+ctx.beginPath();
+ctx.arc(s.x,s.y,s.radius,0,Math.PI*2);
+ctx.fill();
+});
+}
+setInterval(draw,33);
 
-        for (let i = 0; i < drops.length; i++) {
-            const text = letters.charAt(Math.floor(Math.random() * letters.length));
-            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+// ACCESO
+function access(){
+let success=Math.random()>0.3;
+let status=document.getElementById("status");
+if(success){
+status.innerHTML="✅ ACCESO CONCEDIDO";
+status.style.color="#00ff00";
+document.getElementById("login").style.display="none";
+}else{
+status.innerHTML="❌ ACCESO DENEGADO";
+status.style.color="red";
+}
+}
 
-            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975)
-                drops[i] = 0;
+// TERMINAL
+function run(e){
+if(e.key==="Enter"){
+let cmd=e.target.value;
+let output=document.getElementById("output");
+if(cmd==="help"){
+output.innerHTML="Comandos: about, skills, clear";
+}
+else if(cmd==="about"){
+output.innerHTML="Soy Angel 329, futuro experto en ciberseguridad.";
+}
+else if(cmd==="skills"){
+output.innerHTML="HTML, CSS, JavaScript en progreso.";
+}
+else if(cmd==="clear"){
+output.innerHTML="";
+}
+else{
+output.innerHTML="Comando no reconocido.";
+}
+e.target.value="";
+}
+}
 
-            drops[i]++;
-        }
-    }
-
-    setInterval(draw, 33);
-
-    window.addEventListener("resize", () => {
-        canvas.height = window.innerHeight;
-        canvas.width = window.innerWidth;
-    });
+// SCROLL ANIMATION
+const sections=document.querySelectorAll("section");
+window.addEventListener("scroll",()=>{
+sections.forEach(sec=>{
+const top=sec.getBoundingClientRect().top;
+if(top<window.innerHeight-100){
+sec.classList.add("visible");
+}
+});
+});
 </script>
 
 </body>
